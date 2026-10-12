@@ -32,64 +32,73 @@ app.set("view engine", "ejs"); // to render our ejs file set view  engine to ejs
 app.set("views", path.join(__dirname, "views")); // setpath for views folder so it can run from anywhere;
 app.use(express.static(path.join(__dirname, "public"))); // setpath for public folder so it can run from anywhere;
 
-app.use(express.urlencoded({extended: true})); // to parse and read  POST req data;
+app.use(express.urlencoded({ extended: true })); // to parse and read  POST req data;
 
 
-// GET REQ --> main route
+// *GET REQ --> main route
 app.get("/chats", async (req, res) => {
     let chats = await Chat.find();
+
+    if (!chats) {
+        throw new ExpressError(403, "CHats not Found");
+    }
+
     res.render("chats.ejs", { chats });
 })
 
-// GET REQ --> new form route
+// *GET REQ --> new form route
 app.get("/chats/new", (req, res) => {
     res.render("new.ejs");
 })
 
 
-// POST REQ --> to add new chat route
-app.post("/chats", async(req, res) => {
-    let { sender, msg, reciver} = req.body;
+// *POST REQ --> to add new chat route
+app.post("/chats", async (req, res) => {
+    let { sender, msg, receiver } = req.body;
 
     const chat = new Chat({
         from: sender,
-        to: reciver,
+        to: receiver,
         msg: msg,
         created_at: new Date()
     })
 
-    await chat.save()
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
+    await chat.save();
 
     res.redirect("/chats");
 })
 
-// GET REQ --> to edit form route
-app.get("/chats/:id/edit", async (req, res) => {
-    let id = req.params;
-    let chatId = id.id;
-    const chat = await Chat.findById(chatId);
-    res.render("edit.ejs", { chat });
+// *GET REQ --> to edit form route
+app.get("/chats/:id/edit", async (req, res, next) => {
+    try {
+        let id = req.params;
+        let chatId = id.id;
+        const chat = await Chat.findById(chatId);
+        res.render("edit.ejs", { chat });
+    } catch(err){
+        next(err)
+    }
 })
 
-// PUT REQ --> to update route
-app.put("/chats/:id", async(req, res) => {
+// *PUT REQ --> to update route
+app.put("/chats/:id", async (req, res) => {
     let id = req.params;
     let msg = req.body;
     let chatId = id.id;
     let editMsg = msg.msg;
 
+
+
     await Chat.findByIdAndUpdate(
         chatId,
-        {$set: {msg: editMsg}}
+        { $set: { msg: editMsg } }
     );
 
     res.redirect("/chats");
 })
 
-// DELETE REQ --> delete chat route
-app.delete("/chats/:id", async(req, res) => {
+//! DELETE REQ --> delete chat route
+app.delete("/chats/:id", async (req, res) => {
     let id = req.params;
     let chatId = id.id;
 
@@ -106,7 +115,9 @@ app.get("/", (req, res) => {
 
 
 
-
+app.use((req, res, next) => {
+    res.status(404).send("Page not Found!!");
+})
 
 
 //! Error handling Middleware
