@@ -103,6 +103,18 @@ app.get("/", (req, res) => {
     res.render("home.ejs");
 })
 
+
+
+
+
+
+
+//! Error handling Middleware
+app.use((err, req, res, next) => {
+    let { status = 500, message = "Sever Error" } = err;
+    res.status(status).send(message);
+})
+
 app.listen(port, () => {
     console.log(`app is listening to this port: ${port}`);
 })
