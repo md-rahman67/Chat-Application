@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Message</title>
+
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+
+        h3{
+            color: rgb(255, 187, 0);
+        }
+
+        form{
+            background-color: gainsboro;
+            color: black;
+            padding: 0.8rem;
+            margin: 5px;
+            border-radius: 1rem;
+            display: inline-block;
+        }
+
+        button{
+            background-color: rgb(255, 187, 0);
+            border: none;
+            border-radius: 1rem;
+            width: 5rem;
+            height: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h3>write new chat...</h3>
+
+    <form action="/chats" method="post">
+        <input type="text" name="sender" placeholder="sender" style="margin-bottom: 5px;">
+        <br>
+        <textarea name="msg" placeholder="Message" rows="5"></textarea>
+        <br>
+        <input type="text" name="reciver" placeholder="reciver" style="margin-bottom: 5px;">
+        <br>
+        <button type="submit">send</button>
+    </form>
+</body>
+</html>

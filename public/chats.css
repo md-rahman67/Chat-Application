@@ -1,0 +1,26 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+.chat{
+    background-color: gainsboro;
+    color: black;
+    padding: 0.8rem;
+    margin: 5px;
+    border-radius: 1rem;
+    display: inline-block;
+    /* padding-bottom: 0;
+    line-height: 0.8rem; */
+}
+
+#msg{
+    background-color: oklch(64.282% 0.14927 58.358);
+    color: white;
+    border-radius: 1rem;
+    padding: 0.8rem;
+}
+
+h1{
+    color: rgb(255, 187, 0);
+}
