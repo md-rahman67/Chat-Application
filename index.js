@@ -46,7 +46,7 @@ app.get("/chats", async (req, res) => {
     res.render("chats.ejs", { chats });
 })
 
-// *GET REQ --> new form route
+// *GET REQ --> add form route
 app.get("/chats/new", (req, res) => {
     res.render("new.ejs");
 })
