@@ -3,6 +3,7 @@ dotenv.config();
 const express = require("express");
 const path = require("path"); // to access views and public folder from index.js we requre path;
 const mongoose = require("mongoose"); // to use mongoDB quries and interact with database we require mongoose package;
+const ExpressError = require("./ExpressError.js"); //! Custom Error Class
 
 const methodOverride = require("method-override"); // require method-override package to use https verbs like PUT, DELETE & PATCH;
 
